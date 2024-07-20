@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServerApi.Dtos;
+using ServerApi.Dtos.CreateDtos;
 using ServerApi.Servicies.Interfaces;
 
 namespace ServerApi.Controllers
@@ -35,7 +36,7 @@ namespace ServerApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CarteDto>> CreateCarte(CarteDto carte)
+        public async Task<ActionResult<CarteDto>> CreateCarte(CreateCarteDto carte)
         {
             var carteAdded = await _carteService.AddCarteAsync(carte);
             return CreatedAtAction(nameof(GetCarte), new { id = carteAdded.Id }, carteAdded);

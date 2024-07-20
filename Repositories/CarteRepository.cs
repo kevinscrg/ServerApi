@@ -16,7 +16,12 @@ namespace ServerApi.Repositories
 
          public async Task<IEnumerable<Carte>> GetAllCartiAsync()
         {
-            return await _context.Carti.ToListAsync();
+            return await _context.Carti
+                .Include(carte => carte.Genuri) 
+                .Include(carte => carte.Tropeuri)
+                .AsSplitQuery()
+                .ToListAsync();
+       
         }
 
         public async Task<Carte> GetCarteByIdAsync(int id)

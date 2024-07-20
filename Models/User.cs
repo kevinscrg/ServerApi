@@ -15,7 +15,7 @@ namespace ServerApi.Models
         public string Parola { get; set; } = string.Empty;
 
 
-        public List<Recenzie>? Recenzii { get; set; }
+        public List<Recenzie> Recenzii { get; set; } = new List<Recenzie>();
 
 
         public string? Nume { get; set; }

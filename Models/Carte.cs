@@ -38,12 +38,12 @@ namespace ServerApi.Models
         public float? Rating { get; set; }
 
 
-        public List<Recenzie>? Recenzii { get; set; } 
+        public List<Recenzie> Recenzii { get; set; }  = new List<Recenzie>();
 
 
-        public List<Gen>? Genuri { get; set; }
+        public List<Gen> Genuri { get; set; } = new List<Gen>();
         
         
-        public List<Trope>? Tropeuri { get; set; }
+        public List<Trope> Tropeuri { get; set; } = new List<Trope>();
     }
 }

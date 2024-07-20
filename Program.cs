@@ -1,4 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using ServerApi.Data;
+using ServerApi.Repositories;
+using ServerApi.Repositories.Interfaces;
+using ServerApi.Servicies;
+using ServerApi.Servicies.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +13,23 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddSqlite<AppDbContext>(connectionString);
 
 
-    
+
+// AutoMapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+// Repositories
+builder.Services.AddScoped<ICarteRepository, CarteRepository>();
+builder.Services.AddScoped<IGenRepository, GenRepository>();
+builder.Services.AddScoped<ITropeRepository, TropeRepository>();
+builder.Services.AddScoped<IRecenzieRepository, RecenzieRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+
+// Services
+builder.Services.AddScoped<ICarteService, CarteService>();
+builder.Services.AddScoped<IRecenzieService, RecenzieService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 builder.Services.AddControllers();
@@ -17,6 +38,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+await app.Services.CreateScope()
+    .ServiceProvider.GetRequiredService<AppDbContext>()
+    .Database.MigrateAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

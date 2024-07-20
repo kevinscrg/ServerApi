@@ -1,4 +1,5 @@
 ﻿using ServerApi.Dtos;
+using ServerApi.Dtos.CreateDtos;
 
 namespace ServerApi.Servicies.Interfaces
 {
@@ -6,7 +7,7 @@ namespace ServerApi.Servicies.Interfaces
     {
         Task<IEnumerable<CarteDto>> GetAllCartiAsync();
         Task<CarteDto> GetCarteByIdAsync(int id);
-        Task<CarteDto> AddCarteAsync(CarteDto carte);
+        Task<CarteDto> AddCarteAsync(CreateCarteDto carte);
         Task UpdateCarteAsync(CarteDto carte);
         Task DeleteCarteAsync(int id);
     }
