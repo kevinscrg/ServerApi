@@ -8,21 +8,14 @@ namespace ServerApi.Models
 
 
         [Required]
-        public string Status { get; set; }
-
-
-        [Required]
-        public int IdUser { get; set; }
+        public string Status { get; set; } = string.Empty;
 
         
-        public string Text { get; set; }
+        public string? Text { get; set; }
 
 
         [Range(0.0, 5.0)]
         [Required]
         public float Rating { get; set; }
-
-        [Required]
-        public int IdCarte { get; set; }
     }
 }

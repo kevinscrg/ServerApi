@@ -64,8 +64,7 @@ namespace ServerApi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("LinkAchizitionare")
-                        .IsRequired()
+                    b.Property<string>("Link")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("NrPagini")
@@ -97,7 +96,6 @@ namespace ServerApi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nume")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -114,12 +112,6 @@ namespace ServerApi.Migrations
                     b.Property<int?>("CarteId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("IdCarte")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("IdUser")
-                        .HasColumnType("INTEGER");
-
                     b.Property<float>("Rating")
                         .HasColumnType("REAL");
 
@@ -128,12 +120,16 @@ namespace ServerApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Text")
-                        .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CarteId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Recenzii");
                 });
@@ -145,7 +141,6 @@ namespace ServerApi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nume")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -210,9 +205,18 @@ namespace ServerApi.Migrations
                     b.HasOne("ServerApi.Models.Carte", null)
                         .WithMany("Recenzii")
                         .HasForeignKey("CarteId");
+
+                    b.HasOne("ServerApi.Models.User", null)
+                        .WithMany("Recenzii")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ServerApi.Models.Carte", b =>
+                {
+                    b.Navigation("Recenzii");
+                });
+
+            modelBuilder.Entity("ServerApi.Models.User", b =>
                 {
                     b.Navigation("Recenzii");
                 });

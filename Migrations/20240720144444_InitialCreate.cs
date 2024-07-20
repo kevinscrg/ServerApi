@@ -21,7 +21,7 @@ namespace ServerApi.Migrations
                     Isbn = table.Column<string>(type: "TEXT", nullable: false),
                     NrPagini = table.Column<int>(type: "INTEGER", nullable: false),
                     DataAparitie = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    LinkAchizitionare = table.Column<string>(type: "TEXT", nullable: false),
+                    Link = table.Column<string>(type: "TEXT", nullable: true),
                     Descriere = table.Column<string>(type: "TEXT", nullable: false),
                     Poza = table.Column<string>(type: "TEXT", nullable: false),
                     Pret = table.Column<double>(type: "REAL", nullable: false),
@@ -38,7 +38,7 @@ namespace ServerApi.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nume = table.Column<string>(type: "TEXT", nullable: false)
+                    Nume = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -51,7 +51,7 @@ namespace ServerApi.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nume = table.Column<string>(type: "TEXT", nullable: false)
+                    Nume = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -71,29 +71,6 @@ namespace ServerApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Recenzii",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Status = table.Column<string>(type: "TEXT", nullable: false),
-                    IdUser = table.Column<int>(type: "INTEGER", nullable: false),
-                    Text = table.Column<string>(type: "TEXT", nullable: false),
-                    Rating = table.Column<float>(type: "REAL", nullable: false),
-                    IdCarte = table.Column<int>(type: "INTEGER", nullable: false),
-                    CarteId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Recenzii", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Recenzii_Carti_CarteId",
-                        column: x => x.CarteId,
-                        principalTable: "Carti",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -144,6 +121,33 @@ namespace ServerApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Recenzii",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Status = table.Column<string>(type: "TEXT", nullable: false),
+                    Text = table.Column<string>(type: "TEXT", nullable: true),
+                    Rating = table.Column<float>(type: "REAL", nullable: false),
+                    CarteId = table.Column<int>(type: "INTEGER", nullable: true),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Recenzii", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Recenzii_Carti_CarteId",
+                        column: x => x.CarteId,
+                        principalTable: "Carti",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Recenzii_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CarteGen_GenuriId",
                 table: "CarteGen",
@@ -158,6 +162,11 @@ namespace ServerApi.Migrations
                 name: "IX_Recenzii_CarteId",
                 table: "Recenzii",
                 column: "CarteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Recenzii_UserId",
+                table: "Recenzii",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -173,9 +182,6 @@ namespace ServerApi.Migrations
                 name: "Recenzii");
 
             migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
                 name: "Genuri");
 
             migrationBuilder.DropTable(
@@ -183,6 +189,9 @@ namespace ServerApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Carti");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

@@ -20,7 +20,7 @@ namespace ServerApi.Models
         public DateOnly DataAparitie { get; set; }
         
         
-        public string LinkAchizitionare { get; set; } = string.Empty;
+        public string? Link { get; set; }
 
 
         [Required]
@@ -36,14 +36,14 @@ namespace ServerApi.Models
 
         [Range(0.0, 5.0)]
         public float? Rating { get; set; }
-        
-        
-        public List<Gen> Genuri { get; set; } = new List<Gen>();
-        
-        
-        public List<Trope> Tropeuri { get; set; } = new List<Trope>();
 
 
-        public  List<Recenzie> Recenzii { get; set; }  = new List<Recenzie>();
+        public List<Recenzie>? Recenzii { get; set; } 
+
+
+        public List<Gen>? Genuri { get; set; }
+        
+        
+        public List<Trope>? Tropeuri { get; set; }
     }
 }

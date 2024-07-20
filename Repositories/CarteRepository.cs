@@ -1,33 +1,52 @@
-﻿using ServerApi.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ServerApi.Data;
+using ServerApi.Models;
 using ServerApi.Repositories.Interfaces;
 
 namespace ServerApi.Repositories
 {
     public class CarteRepository : ICarteRepository
     {
-        public Task<Carte> AddCarteAsync(Carte carte)
+        private AppDbContext _context;
+
+        public CarteRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task DeleteCarteAsync(int id)
+         public async Task<IEnumerable<Carte>> GetAllCartiAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Carti.ToListAsync();
         }
 
-        public Task<IEnumerable<Carte>> GetAllCartiAsync()
+        public async Task<Carte> GetCarteByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Carti.FindAsync(id);
         }
 
-        public Task<Carte> GetCarteByIdAsync(int id)
+
+        public async Task<Carte> AddCarteAsync(Carte carte)
         {
-            throw new NotImplementedException();
+            _context.Carti.Add(carte);
+            await _context.SaveChangesAsync();
+            return carte;
         }
 
-        public Task UpdateCarteAsync(Carte carte)
+        public async Task DeleteCarteAsync(int id)
         {
-            throw new NotImplementedException();
+            var carte = await _context.Carti.FindAsync(id);
+            if(carte != null)
+            {
+                _context.Carti.Remove(carte);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+       
+        public async Task UpdateCarteAsync(Carte carte)
+        {
+           _context.Entry(carte).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using ServerApi.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace ServerApi.DTOs
+namespace ServerApi.Dtos
 {
     public class CarteDto
     {
+
         [Required]
         public string Titlu { get; set; }
 
@@ -19,7 +20,7 @@ namespace ServerApi.DTOs
         public DateOnly DataAparitie { get; set; }
 
 
-        public string LinkAchizitionare { get; set; }
+        public string Link { get; set; }
 
 
         [Required]
@@ -37,12 +38,12 @@ namespace ServerApi.DTOs
         public float? Rating { get; set; }
 
 
-        public List<string> Gen { get; set; }
+        public List<GenDto> Genuri { get; set; }
 
 
-        public List<string> Tropeuri { get; set; }
+        public List<TropeDto> Tropeuri { get; set; }
 
 
-        public List<Recenzie> Recenzii { get; set; }
+        public List<RecenzieDto> Recenzii { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ServerApi.DTOs
+namespace ServerApi.Dtos
 {
     public class UserDto
     {
@@ -11,6 +11,9 @@ namespace ServerApi.DTOs
 
         [Required]
         public string Parola { get; set; }
+
+
+        public List<RecenzieDto>? Recenzii { get; set; }
 
 
         public string? Nume { get; set; }

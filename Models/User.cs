@@ -8,11 +8,14 @@ namespace ServerApi.Models
 
 
         [Required]
-        public string UserName { get; set; }
+        public string UserName { get; set; } = string.Empty;
 
 
         [Required]
-        public string Parola { get; set; }
+        public string Parola { get; set; } = string.Empty;
+
+
+        public List<Recenzie>? Recenzii { get; set; }
 
 
         public string? Nume { get; set; }

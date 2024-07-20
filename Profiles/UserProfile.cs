@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ServerApi.Dtos;
 
 namespace ServerApi.Profiles
 {
@@ -6,7 +7,7 @@ namespace ServerApi.Profiles
     {
         public UserProfile()
         {
-            CreateMap<Models.User, DTOs.UserDto>().ReverseMap();
+            CreateMap<Models.User, UserDto>().ReverseMap();
         }
     }
 }

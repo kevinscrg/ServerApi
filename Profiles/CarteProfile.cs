@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ServerApi.Dtos;
 
 namespace ServerApi.Profiles
 {
@@ -6,7 +7,7 @@ namespace ServerApi.Profiles
     {
         public CarteProfile()
         {
-            CreateMap<Models.Carte, DTOs.CarteDto>().ReverseMap();
+            CreateMap<Models.Carte, CarteDto>().ReverseMap();
         }
     }
 }
