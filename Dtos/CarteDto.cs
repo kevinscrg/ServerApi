@@ -6,6 +6,8 @@ namespace ServerApi.Dtos
     public class CarteDto
     {
 
+        public int Id { get; set; }
+
         [Required]
         public string Titlu { get; set; }
 

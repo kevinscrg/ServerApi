@@ -10,6 +10,8 @@ namespace ServerApi.Dtos
     }
     public class RecenzieDto
     {
+        public int Id { get; set; }
+
         [Required]
         public StatusRecenzie Status { get; set; }
 
