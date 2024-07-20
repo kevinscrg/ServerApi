@@ -4,12 +4,14 @@ namespace ServerApi.Models
 {
     public class Carte
     {
+        public int Id { get; set; }
+
         [Required]
-        public string Titlu { get; set; }
+        public string Titlu { get; set; } = string.Empty;
 
 
         [Required]
-        public string Isbn { get; set; }
+        public string Isbn { get; set; } = string.Empty;
         
         
         public int NrPagini { get; set; }
@@ -18,15 +20,15 @@ namespace ServerApi.Models
         public DateOnly DataAparitie { get; set; }
         
         
-        public string LinkAchizitionare { get; set; }
+        public string LinkAchizitionare { get; set; } = string.Empty;
 
 
         [Required]
-        public string Descriere { get; set; }
+        public string Descriere { get; set; } = string.Empty;
 
 
         [Required]
-        public string Poza { get; set; }
+        public string Poza { get; set; } = string.Empty;
         
         
         public double Pret { get; set; }
@@ -36,12 +38,12 @@ namespace ServerApi.Models
         public float? Rating { get; set; }
         
         
-        public List<string> Gen { get; set; }
+        public List<Gen> Genuri { get; set; } = new List<Gen>();
         
         
-        public List<string> Tropeuri { get; set; }
+        public List<Trope> Tropeuri { get; set; } = new List<Trope>();
 
 
-        public  List<Recenzie> Recenzii { get; set; }   
+        public  List<Recenzie> Recenzii { get; set; }  = new List<Recenzie>();
     }
 }
