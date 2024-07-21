@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ServerApi.Dtos;
 using ServerApi.Dtos.CreateDtos;
+using ServerApi.Dtos.UpdateDtos;
 using ServerApi.Models;
 using ServerApi.Repositories.Interfaces;
 using ServerApi.Servicies.Interfaces;
@@ -10,15 +11,11 @@ namespace ServerApi.Servicies
     public class CarteService : ICarteService
     {
         private readonly ICarteRepository _carteRepository;
-        private readonly IGenRepository _genRepository;
-        private readonly ITropeRepository _tropeRepository;
         private readonly IMapper _mapper;
        
-        public CarteService(ICarteRepository carteRepository,IGenRepository genRepository, ITropeRepository tropeRepository, IMapper mapper)
+        public CarteService(ICarteRepository carteRepository, IMapper mapper)
         {
             _carteRepository = carteRepository;
-            _genRepository = genRepository;
-            _tropeRepository = tropeRepository;
             _mapper = mapper;
         }
 
@@ -37,21 +34,17 @@ namespace ServerApi.Servicies
         public async Task<CarteDto> AddCarteAsync(CreateCarteDto carte)
         {
             var carteToAdd = _mapper.Map<Carte>(carte);
-            foreach (var genId in carte.GenuriId)
-            {
-                var gen = await _genRepository.GetGenByIdAsync(genId);
-                carteToAdd.Genuri.Add(gen);
-            }
-            foreach (var tropeId in carte.TropeuriId)
-            {
-                var trope = await _tropeRepository.GetTropeByIdAsync(tropeId);
-                carteToAdd.Tropeuri.Add(trope);
-            }
             var carteAdded = await _carteRepository.AddCarteAsync(carteToAdd);
-            return _mapper.Map<CarteDto>(carteAdded);
+           
+            await _carteRepository.AddGenuriToCarteAsync(carteAdded.Id, carte.GenuriId);
+            
+            await _carteRepository.AddTropeuriToCarteAsync(carteAdded.Id, carte.TropeuriId);
+           
+            var finalCarte = await _carteRepository.GetCarteByIdAsync(carteAdded.Id);
+            return _mapper.Map<CarteDto>(finalCarte);
         }
 
-        public async Task UpdateCarteAsync(CarteDto carte)
+        public async Task UpdateCarteAsync(UpdateCarteDto carte)
         {
             var carteToUpdate = _mapper.Map<Carte>(carte);
             await _carteRepository.UpdateCarteAsync(carteToUpdate);

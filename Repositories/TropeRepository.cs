@@ -23,5 +23,25 @@ namespace ServerApi.Repositories
         {
             return await _context.Tropeuri.FindAsync(id);
         }
+
+        public async Task<Trope> AddTropeAsync(Trope trope)
+        {
+            _context.Tropeuri.Add(trope);
+            await _context.SaveChangesAsync();
+            return trope;
+        }
+
+        public async Task UpdateTropeAsync(Trope trope)
+        {
+            _context.Entry(trope).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteTropeAsync(int id)
+        {
+            var trope = await _context.Tropeuri.FindAsync(id);
+            _context.Tropeuri.Remove(trope);
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -8,6 +8,9 @@ namespace ServerApi.Repositories.Interfaces
     {
         Task<IEnumerable<Gen>> GetAllGenuriAsync();
         Task<Gen> GetGenByIdAsync(int id);
+        Task<Gen> AddGenAsync(Gen gen);
+        Task UpdateGenAsync(Gen gen);
+        Task DeleteGenAsync(int id);
 
     }
 }

@@ -46,5 +46,37 @@ namespace ServerApi.Repositories
             _context.Entry(recenzie).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
+        public async Task AddRecenzieToCarteAsync(int recenzieId, int carteId)
+        {
+            var recenzie = await _context.Recenzii.FindAsync(recenzieId);
+            var carte = await _context.Carti.FindAsync(carteId);
+            if(recenzie != null && carte != null)
+            {
+                carte.Recenzii.Add(recenzie);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task AddRecenzieToUserAsync(int recenzieId, int userId)
+        {
+            var recenzie = await _context.Recenzii.FindAsync(recenzieId);
+            var user = await _context.Users.FindAsync(userId);
+            if(recenzie != null && user != null)
+            {
+                user.Recenzii.Add(recenzie);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task UpdateRecenzieStatusAsync(int recenzieId, string status)
+        {
+            var recenzie = await _context.Recenzii.FindAsync(recenzieId);
+            if(recenzie != null)
+            {
+                recenzie.Status = status;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

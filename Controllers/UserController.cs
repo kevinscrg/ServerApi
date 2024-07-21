@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServerApi.Dtos;
+using ServerApi.Dtos.CreateDtos;
 using ServerApi.Servicies.Interfaces;
 
 namespace ServerApi.Controllers
@@ -34,7 +35,7 @@ namespace ServerApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<UserDto>> CreateUser(UserDto user)
+        public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto user)
         {
             var userAdded = await _userService.AddUserAsync(user);
             return CreatedAtAction(nameof(GetUser), new { id = userAdded.Id }, userAdded);

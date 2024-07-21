@@ -41,9 +41,5 @@ namespace ServerApi.Dtos.CreateDtos
 
 
         public List<int> TropeuriId { get; set; }
-
-
-        public List<int> RecenziiId { get; set; }
-
     }
 }

@@ -22,5 +22,25 @@ namespace ServerApi.Repositories
         {
             return await _context.Genuri.FindAsync(id);
         }
+
+        public async Task<Gen> AddGenAsync(Gen gen)
+        {
+            _context.Genuri.Add(gen);
+            await _context.SaveChangesAsync();
+            return gen;
+        }
+
+        public async Task UpdateGenAsync(Gen gen)
+        {
+            _context.Entry(gen).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteGenAsync(int id)
+        {
+            var gen = await _context.Genuri.FindAsync(id);
+            _context.Genuri.Remove(gen);
+            await _context.SaveChangesAsync();
+        }
     }
 }

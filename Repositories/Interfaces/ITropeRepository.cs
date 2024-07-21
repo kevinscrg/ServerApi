@@ -7,5 +7,8 @@ namespace ServerApi.Repositories.Interfaces
     {
         Task<IEnumerable<Trope>> GetAllTropeuriAsync();
         Task<Trope> GetTropeByIdAsync(int id);
+        Task<Trope> AddTropeAsync(Trope trope);
+        Task UpdateTropeAsync(Trope trope);
+        Task DeleteTropeAsync(int id);
     }
 }

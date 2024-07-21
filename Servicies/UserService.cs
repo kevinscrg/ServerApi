@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ServerApi.Dtos;
+using ServerApi.Dtos.CreateDtos;
 using ServerApi.Models;
 using ServerApi.Repositories.Interfaces;
 using ServerApi.Servicies.Interfaces;
@@ -29,7 +30,7 @@ namespace ServerApi.Servicies
             return _mapper.Map<UserDto>(user);
         }
 
-        public async Task<UserDto> AddUserAsync(UserDto user)
+        public async Task<UserDto> AddUserAsync(CreateUserDto user)
         {
             var userToAdd = _mapper.Map<User>(user);
             var userAdded = await _userRepository.AddUserAsync(userToAdd);

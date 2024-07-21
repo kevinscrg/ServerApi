@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ServerApi.Dtos;
+using ServerApi.Dtos.CreateDtos;
 
 namespace ServerApi.Profiles
 {
@@ -8,6 +9,7 @@ namespace ServerApi.Profiles
         public RecenzieProfile()
         {
             CreateMap<Models.Recenzie, RecenzieDto>().ReverseMap();
+            CreateMap<Models.Recenzie, CreateRecenzieDto>().ReverseMap();
         }
     }
 }

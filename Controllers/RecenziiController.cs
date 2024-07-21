@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServerApi.Dtos;
+using ServerApi.Dtos.CreateDtos;
 using ServerApi.Servicies.Interfaces;
 
 namespace ServerApi.Controllers
@@ -34,7 +35,7 @@ namespace ServerApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<RecenzieDto>> CreateRecenzie(RecenzieDto recenzie)
+        public async Task<ActionResult<RecenzieDto>> CreateRecenzie(CreateRecenzieDto recenzie)
         {
             var recenzieAdded = await _recenzieService.AddRecenzieAsync(recenzie);
             return CreatedAtAction(nameof(GetRecenzie), new { id = recenzieAdded.Id }, recenzieAdded);

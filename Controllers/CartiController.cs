@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServerApi.Dtos;
 using ServerApi.Dtos.CreateDtos;
+using ServerApi.Dtos.UpdateDtos;
 using ServerApi.Servicies.Interfaces;
 
 namespace ServerApi.Controllers
@@ -43,7 +44,7 @@ namespace ServerApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCarte(int id, CarteDto carte)
+        public async Task<IActionResult> UpdateCarte(int id, UpdateCarteDto carte)
         {
             if (id != carte.Id)
             {

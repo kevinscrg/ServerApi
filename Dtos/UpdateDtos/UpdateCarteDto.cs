@@ -1,12 +1,11 @@
-﻿using ServerApi.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace ServerApi.Dtos
+namespace ServerApi.Dtos.UpdateDtos
 {
-    public class CarteDto
+    public class UpdateCarteDto
     {
-
         public int Id { get; set; }
+
 
         [Required]
         public string Titlu { get; set; }
@@ -40,16 +39,9 @@ namespace ServerApi.Dtos
         public float? Rating { get; set; }
 
 
-        public List<string> Genuri { get; set; } 
+        public List<int> GenuriId { get; set; }
 
 
-        public List<string> Tropeuri { get; set; }
-
-
-        public List<string> RecenziiText { get; set; }
-
-
-        
-        public List<float> ReceziiRating { get; set; }
-    }   
+        public List<int> TropeuriId { get; set; }
+    }
 }

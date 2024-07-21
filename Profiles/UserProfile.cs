@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ServerApi.Dtos;
+using ServerApi.Dtos.CreateDtos;
 
 namespace ServerApi.Profiles
 {
@@ -7,7 +8,10 @@ namespace ServerApi.Profiles
     {
         public UserProfile()
         {
-            CreateMap<Models.User, UserDto>().ReverseMap();
+            CreateMap<Models.User, UserDto>()
+                .ForMember(dest => dest.RecenziiId, opt => opt.MapFrom(src => src.Recenzii.Select(recenzie => recenzie.Id)))
+                .ReverseMap();
+            CreateMap<Models.User, CreateUserDto>().ReverseMap();
         }
     }
 }

@@ -16,7 +16,9 @@ namespace ServerApi.Repositories
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Include(user => user.Recenzii)
+                .ToListAsync();
         }
 
         public async Task<User> GetUserByIdAsync(int id)
@@ -46,5 +48,7 @@ namespace ServerApi.Repositories
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
+       
     }
 }
