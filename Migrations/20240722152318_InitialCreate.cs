@@ -63,7 +63,7 @@ namespace ServerApi.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserName = table.Column<string>(type: "TEXT", nullable: false),
+                    Email = table.Column<string>(type: "TEXT", nullable: false),
                     Parola = table.Column<string>(type: "TEXT", nullable: false),
                     Nume = table.Column<string>(type: "TEXT", nullable: true)
                 },

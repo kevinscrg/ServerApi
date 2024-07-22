@@ -11,8 +11,8 @@ using ServerApi.Data;
 namespace ServerApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240721140513_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240722152401_SeedGenres")]
+    partial class SeedGenres
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,6 +101,28 @@ namespace ServerApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genuri");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nume = "Thriller"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nume = "Romance"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nume = "Drama"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Nume = "Politist"
+                        });
                 });
 
             modelBuilder.Entity("ServerApi.Models.Recenzie", b =>
@@ -146,6 +168,28 @@ namespace ServerApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tropeuri");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nume = "enemies to lovers"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nume = "so many lies"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nume = "twist ending"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Nume = "undercover mission"
+                        });
                 });
 
             modelBuilder.Entity("ServerApi.Models.User", b =>
@@ -154,14 +198,14 @@ namespace ServerApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Nume")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Parola")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

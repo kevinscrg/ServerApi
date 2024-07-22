@@ -11,5 +11,6 @@ namespace ServerApi.Servicies.Interfaces
         Task<UserDto> AddUserAsync(CreateUserDto user);
         Task UpdateUserAsync(UpdateUserDto user);
         Task DeleteUserAsync(int id);
+
     }
 }

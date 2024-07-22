@@ -5,6 +5,8 @@ using ServerApi.Dtos.UpdateDtos;
 using ServerApi.Models;
 using ServerApi.Repositories.Interfaces;
 using ServerApi.Servicies.Interfaces;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace ServerApi.Servicies
 {
@@ -33,6 +35,8 @@ namespace ServerApi.Servicies
 
         public async Task<UserDto> AddUserAsync(CreateUserDto user)
         {
+            var encryptedPass = this.EncryptPass(user.Parola);
+            user.Parola = await encryptedPass;
             var userToAdd = _mapper.Map<User>(user);
             var userAdded = await _userRepository.AddUserAsync(userToAdd);
             return _mapper.Map<UserDto>(userAdded);
@@ -55,6 +59,21 @@ namespace ServerApi.Servicies
         public async Task DeleteUserAsync(int id)
         {
             await _userRepository.DeleteUserAsync(id);
+        }
+
+        
+
+        private Task<string> EncryptPass(string pass)
+        {
+            using var sha256 = SHA256.Create();
+            byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(pass));
+
+            var sb = new StringBuilder();
+            for(int i =0; i< bytes.Length; i++)
+            {
+                sb.Append(bytes[i].ToString("x2"));
+            }
+            return Task.FromResult(sb.ToString());
         }
     }
 }

@@ -195,14 +195,14 @@ namespace ServerApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Nume")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Parola")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

@@ -6,7 +6,7 @@ namespace ServerApi.Dtos.CreateDtos
     {
 
         [Required]
-        public string UserName { get; set; }
+        public string Email { get; set; }
 
         [Required]
         public string Parola { get; set; }
