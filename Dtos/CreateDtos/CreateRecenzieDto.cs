@@ -9,7 +9,7 @@ namespace ServerApi.Dtos.CreateDtos
 
 
         [Required]
-        [Range(0.0, 5.0)]
+        [Range(0.0f, 5.0f)]
         public float Rating { get; set; }
 
         [Required]

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServerApi.Dtos;
 using ServerApi.Dtos.CreateDtos;
+using ServerApi.Dtos.UpdateDtos;
 using ServerApi.Servicies.Interfaces;
 
 namespace ServerApi.Controllers
@@ -42,16 +43,21 @@ namespace ServerApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, UserDto user)
+        public async Task<IActionResult> UpdateUser(int id, UpdateUserDto user)
         {
-            if (id != user.Id)
-            {
-                return BadRequest();
-            }
+            try { 
+                if (id != user.Id)
+                {
+                    return BadRequest();
+                }
 
-            await _userService.UpdateUserAsync(user);
+                await _userService.UpdateUserAsync(user);
 
-            return NoContent();
+                return NoContent();
+            }catch(System.Exception e)
+                {
+                    return NotFound(e.Message);
+                }
         }
 
         [HttpDelete("{id}")]

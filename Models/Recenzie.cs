@@ -14,7 +14,7 @@ namespace ServerApi.Models
         public string? Text { get; set; }
 
 
-        [Range(0.0, 5.0)]
+        [Range(0.0f, 5.0f)]
         [Required]
         public float Rating { get; set; }
     }

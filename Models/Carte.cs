@@ -34,10 +34,6 @@ namespace ServerApi.Models
         public double Pret { get; set; }
 
 
-        [Range(0.0, 5.0)]
-        public float? Rating { get; set; }
-
-
         public List<Recenzie> Recenzii { get; set; }  = new List<Recenzie>();
 
 

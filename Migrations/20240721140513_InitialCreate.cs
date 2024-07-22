@@ -24,8 +24,7 @@ namespace ServerApi.Migrations
                     Link = table.Column<string>(type: "TEXT", nullable: true),
                     Descriere = table.Column<string>(type: "TEXT", nullable: false),
                     Poza = table.Column<string>(type: "TEXT", nullable: false),
-                    Pret = table.Column<double>(type: "REAL", nullable: false),
-                    Rating = table.Column<float>(type: "REAL", nullable: true)
+                    Pret = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {

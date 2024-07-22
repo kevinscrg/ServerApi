@@ -28,7 +28,12 @@ namespace ServerApi.Repositories
 
         public async Task<Carte> GetCarteByIdAsync(int id)
         {
-            return await _context.Carti.FindAsync(id);
+            return await _context.Carti
+                            .Include(carte => carte.Genuri)
+                            .Include(carte => carte.Tropeuri)
+                            .Include(carte => carte.Recenzii)
+                            .AsSplitQuery()
+                            .FirstOrDefaultAsync(carte => carte.Id == id);
                
         }
 
@@ -86,6 +91,17 @@ namespace ServerApi.Repositories
             }
         }
 
+        public async Task AddRecenzieToCarteAsync(int carteId, int recenzieId)
+        {
+            var carte = await _context.Carti.FindAsync(carteId);
+            var recenzie = await _context.Recenzii.FindAsync(recenzieId);
+            if(carte != null && recenzie != null)
+            {
+                carte.Recenzii.Add(recenzie);
+                await _context.SaveChangesAsync();
+            }
+        }
+
         public async Task AddTropeToCarteAsync(int carteId, int tropeId)
         {
             var carte = await _context.Carti.FindAsync(carteId);
@@ -114,6 +130,22 @@ namespace ServerApi.Repositories
             }
         }
 
+        public async Task AddRecenziiToCarteAsync(int carteId, List<int> recenziiId)
+        {
+            var carte = await _context.Carti.FindAsync(carteId);
+            if(carte != null)
+            {
+                foreach (var recenzieId in recenziiId)
+                {
+                    var recenzie = await _context.Recenzii.FindAsync(recenzieId);
+                    if(recenzie != null)
+                    {
+                        carte.Recenzii.Add(recenzie);
+                    }
+                }
+                await _context.SaveChangesAsync();
+            }
+        }
 
         public async Task DeleteGenFromCarteAsync(int carteId, int genId)
         {

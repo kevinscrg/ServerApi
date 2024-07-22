@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ServerApi.Dtos;
 using ServerApi.Dtos.CreateDtos;
+using ServerApi.Dtos.UpdateDtos;
 using ServerApi.Models;
 using ServerApi.Repositories.Interfaces;
 using ServerApi.Servicies.Interfaces;
@@ -42,9 +43,15 @@ namespace ServerApi.Servicies
             return _mapper.Map<RecenzieDto>(recenzieAdded);
         }
 
-        public async Task UpdateRecenzieAsync(RecenzieDto recenzie)
+        public async Task UpdateRecenzieAsync(UpdateRecenzieDto recenzie)
         {
-            var recenzieToUpdate = _mapper.Map<Recenzie>(recenzie);
+            var recenzieToUpdate = await _recenzieRepository.GetRecenzieByIdAsync(recenzie.Id);
+            if(recenzieToUpdate == null)             {
+                throw new Exception("Recenzie not found");
+            }
+            recenzieToUpdate.Text = recenzie.Text;
+            recenzieToUpdate.Rating = recenzie.Rating;
+
             await _recenzieRepository.UpdateRecenzieAsync(recenzieToUpdate);
         }
 

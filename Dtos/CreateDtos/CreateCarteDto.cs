@@ -33,10 +33,6 @@ namespace ServerApi.Dtos.CreateDtos
         public double Pret { get; set; }
 
 
-        [Range(0.0, 5.0)]
-        public float? Rating { get; set; }
-
-
         public List<int> GenuriId { get; set; }
 
 

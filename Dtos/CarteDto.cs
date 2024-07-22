@@ -36,8 +36,15 @@ namespace ServerApi.Dtos
         public double Pret { get; set; }
 
 
-        [Range(0.0, 5.0)]
-        public float? Rating { get; set; }
+        public float Rating { 
+            get {
+                if (RecenziiRating != null && RecenziiRating.Any())
+                {
+                    return RecenziiRating.Average();
+                }
+                return 0;
+            } 
+        }
 
 
         public List<string> Genuri { get; set; } 
@@ -50,6 +57,6 @@ namespace ServerApi.Dtos
 
 
         
-        public List<float> ReceziiRating { get; set; }
+        public List<float> RecenziiRating { get; set; }
     }   
 }

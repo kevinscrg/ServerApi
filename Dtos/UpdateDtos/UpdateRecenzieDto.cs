@@ -1,19 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ServerApi.Dtos
+namespace ServerApi.Dtos.UpdateDtos
 {
-    public enum StatusRecenzie
-    {
-        Aprobata,
-        InAsteptare,
-        Refuzata
-    }
-    public class RecenzieDto
+    public class UpdateRecenzieDto
     {
         public int Id { get; set; }
-
-        [Required]
-        public StatusRecenzie Status { get; set; }
 
 
         public string Text { get; set; }

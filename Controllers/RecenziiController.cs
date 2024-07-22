@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServerApi.Dtos;
 using ServerApi.Dtos.CreateDtos;
+using ServerApi.Dtos.UpdateDtos;
 using ServerApi.Servicies.Interfaces;
 
 namespace ServerApi.Controllers
@@ -42,8 +43,9 @@ namespace ServerApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateRecenzie(int id, RecenzieDto recenzie)
+        public async Task<IActionResult> UpdateRecenzie(int id, UpdateRecenzieDto recenzie)
         {
+            try { 
             if (id != recenzie.Id)
             {
                 return BadRequest();
@@ -52,6 +54,10 @@ namespace ServerApi.Controllers
             await _recenzieService.UpdateRecenzieAsync(recenzie);
 
             return NoContent();
+            }catch(System.Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
         [HttpDelete("{id}")]

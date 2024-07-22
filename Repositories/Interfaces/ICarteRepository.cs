@@ -12,14 +12,19 @@ namespace ServerApi.Repositories.Interfaces
 
         Task AddGenToCarteAsync(int carteId, int genId);
 
-        Task AddGenuriToCarteAsync(int carteId, List<int> genuriId);
+        Task AddRecenzieToCarteAsync(int carteId, int recenzieId);
 
         Task AddTropeToCarteAsync(int carteId, int tropeId);
 
+        Task AddGenuriToCarteAsync(int carteId, List<int> genuriId);
+
         Task AddTropeuriToCarteAsync(int carteId, List<int> tropeuriId);
+
+        Task AddRecenziiToCarteAsync(int carteId, List<int> recenziiId);
 
         Task DeleteGenFromCarteAsync(int carteId, int genId);
 
         Task DeleteTropeFromCarteAsync(int carteId, int tropeId);
+
     }
 }

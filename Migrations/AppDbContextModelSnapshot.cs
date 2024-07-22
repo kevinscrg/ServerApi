@@ -29,7 +29,7 @@ namespace ServerApi.Migrations
 
                     b.HasIndex("GenuriId");
 
-                    b.ToTable("CarteGen", (string)null);
+                    b.ToTable("CarteGen");
                 });
 
             modelBuilder.Entity("CarteTrope", b =>
@@ -75,9 +75,6 @@ namespace ServerApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Pret")
-                        .HasColumnType("REAL");
-
-                    b.Property<float?>("Rating")
                         .HasColumnType("REAL");
 
                     b.Property<string>("Titlu")

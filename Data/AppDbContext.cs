@@ -15,7 +15,7 @@ namespace ServerApi.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            
             modelBuilder.Entity<Gen>().HasData(
                 new { Id = 1, Nume = "Thriller" },
                 new { Id = 2, Nume = "Romance" },
@@ -28,7 +28,7 @@ namespace ServerApi.Data
                 new { Id = 3, Nume = "twist ending" },
                 new { Id = 4, Nume = "undercover mission" }
             );
-            
+
         }
 
     }

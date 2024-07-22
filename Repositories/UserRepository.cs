@@ -23,7 +23,9 @@ namespace ServerApi.Repositories
 
         public async Task<User> GetUserByIdAsync(int id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users
+                                .Include(user => user.Recenzii)
+                                .FirstOrDefaultAsync(user => user.Id == id);
         }
 
         public async Task<User> AddUserAsync(User user)
@@ -48,6 +50,7 @@ namespace ServerApi.Repositories
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+
 
        
     }

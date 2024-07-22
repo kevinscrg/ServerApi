@@ -11,7 +11,7 @@ using ServerApi.Data;
 namespace ServerApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240720144444_InitialCreate")]
+    [Migration("20240721140513_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -78,9 +78,6 @@ namespace ServerApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<double>("Pret")
-                        .HasColumnType("REAL");
-
-                    b.Property<float?>("Rating")
                         .HasColumnType("REAL");
 
                     b.Property<string>("Titlu")

@@ -1,5 +1,6 @@
 ﻿using ServerApi.Dtos;
 using ServerApi.Dtos.CreateDtos;
+using ServerApi.Dtos.UpdateDtos;
 
 namespace ServerApi.Servicies.Interfaces
 {
@@ -8,7 +9,7 @@ namespace ServerApi.Servicies.Interfaces
         Task<IEnumerable<RecenzieDto>> GetAllRecenziiAsync();
         Task<RecenzieDto> GetRecenzieByIdAsync(int id);
         Task<RecenzieDto> AddRecenzieAsync(CreateRecenzieDto recenzie);
-        Task UpdateRecenzieAsync(RecenzieDto recenzie);
+        Task UpdateRecenzieAsync(UpdateRecenzieDto recenzie);
         Task DeleteRecenzieAsync(int id);
     }
 }

@@ -46,14 +46,20 @@ namespace ServerApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCarte(int id, UpdateCarteDto carte)
         {
-            if (id != carte.Id)
+            try
             {
-                return BadRequest();
+                if (id != carte.Id)
+                {
+                    return BadRequest();
+                }
+
+                await _carteService.UpdateCarteAsync(carte);
+
+                return NoContent();
+            }catch(System.Exception e)
+            {
+                return NotFound(e.Message);
             }
-
-            await _carteService.UpdateCarteAsync(carte);
-
-            return NoContent();
         }
 
         [HttpDelete("{id}")]

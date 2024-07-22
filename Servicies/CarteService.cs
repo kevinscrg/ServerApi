@@ -46,8 +46,24 @@ namespace ServerApi.Servicies
 
         public async Task UpdateCarteAsync(UpdateCarteDto carte)
         {
-            var carteToUpdate = _mapper.Map<Carte>(carte);
+
+            var carteToUpdate = await _carteRepository.GetCarteByIdAsync(carte.Id);
+
+            if(carteToUpdate == null) throw new System.Exception("Carte not found");
+
+            carteToUpdate.Genuri.Clear();
+            carteToUpdate.Tropeuri.Clear();
+
+            carteToUpdate.Descriere = carte.Descriere;
+            carteToUpdate.Link = carte.Link;
+            carteToUpdate.Pret = carte.Pret;
+
             await _carteRepository.UpdateCarteAsync(carteToUpdate);
+
+            await _carteRepository.AddGenuriToCarteAsync(carte.Id, carte.GenuriId);
+            await _carteRepository.AddTropeuriToCarteAsync(carte.Id, carte.TropeuriId);
+
+
         }
 
         public async Task DeleteCarteAsync(int id)

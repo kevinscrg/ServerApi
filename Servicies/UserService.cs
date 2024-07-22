@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ServerApi.Dtos;
 using ServerApi.Dtos.CreateDtos;
+using ServerApi.Dtos.UpdateDtos;
 using ServerApi.Models;
 using ServerApi.Repositories.Interfaces;
 using ServerApi.Servicies.Interfaces;
@@ -37,10 +38,18 @@ namespace ServerApi.Servicies
             return _mapper.Map<UserDto>(userAdded);
         }
 
-        public async Task UpdateUserAsync(UserDto user)
+        public async Task UpdateUserAsync(UpdateUserDto user)
         {
-            var userToUpdate = _mapper.Map<User>(user);
+            var userToUpdate = await _userRepository.GetUserByIdAsync(user.Id);
+
+            if (userToUpdate == null) throw new Exception("User not found");
+            
+
+            userToUpdate.Nume = user.Nume;
+            userToUpdate.Parola = user.Parola;
+
             await _userRepository.UpdateUserAsync(userToUpdate);
+
         }
 
         public async Task DeleteUserAsync(int id)
