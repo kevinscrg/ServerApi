@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ServerApi.Dtos.CreateDtos
+namespace ServerApi.Dtos.CarteDtos
 {
     public class CreateCarteDto
     {

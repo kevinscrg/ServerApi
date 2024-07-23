@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ServerApi.Dtos;
-using ServerApi.Dtos.CreateDtos;
-using ServerApi.Dtos.UpdateDtos;
+using ServerApi.Dtos.CarteDtos;
 using ServerApi.Servicies.Interfaces;
 
 namespace ServerApi.Controllers

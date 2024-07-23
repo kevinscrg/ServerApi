@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ServerApi.Dtos.UpdateDtos
+namespace ServerApi.Dtos.ReceznieDtos
 {
     public class UpdateRecenzieDto
     {

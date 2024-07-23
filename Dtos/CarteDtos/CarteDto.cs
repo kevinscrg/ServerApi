@@ -1,7 +1,7 @@
 ﻿using ServerApi.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace ServerApi.Dtos
+namespace ServerApi.Dtos.CarteDtos
 {
     public class CarteDto
     {
@@ -36,18 +36,20 @@ namespace ServerApi.Dtos
         public double Pret { get; set; }
 
 
-        public float Rating { 
-            get {
+        public float Rating
+        {
+            get
+            {
                 if (RecenziiRating != null && RecenziiRating.Any())
                 {
                     return RecenziiRating.Average();
                 }
                 return 0;
-            } 
+            }
         }
 
 
-        public List<string> Genuri { get; set; } 
+        public List<string> Genuri { get; set; }
 
 
         public List<string> Tropeuri { get; set; }
@@ -56,7 +58,7 @@ namespace ServerApi.Dtos
         public List<string> RecenziiText { get; set; }
 
 
-        
+
         public List<float> RecenziiRating { get; set; }
-    }   
+    }
 }

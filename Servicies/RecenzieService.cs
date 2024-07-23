@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using ServerApi.Dtos;
 using ServerApi.Dtos.CreateDtos;
-using ServerApi.Dtos.UpdateDtos;
+using ServerApi.Dtos.ReceznieDtos;
 using ServerApi.Models;
 using ServerApi.Repositories.Interfaces;
 using ServerApi.Servicies.Interfaces;

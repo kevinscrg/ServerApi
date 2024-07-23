@@ -1,4 +1,4 @@
-﻿using ServerApi.Dtos;
+﻿using ServerApi.Dtos.OtherDtos;
 
 namespace ServerApi.Servicies.Interfaces
 {

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ServerApi.Dtos;
+using ServerApi.Dtos.OtherDtos;
 using ServerApi.Models;
 using ServerApi.Repositories.Interfaces;
 using ServerApi.Servicies.Interfaces;

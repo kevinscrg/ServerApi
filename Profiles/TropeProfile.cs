@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ServerApi.Dtos.OtherDtos;
 
 namespace ServerApi.Profiles
 {
@@ -6,7 +7,7 @@ namespace ServerApi.Profiles
     {
         public TropeProfile()
         {
-            CreateMap<Models.Trope, Dtos.TropeDto>().ReverseMap();
+            CreateMap<Models.Trope, TropeDto>().ReverseMap();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ServerApi.Dtos
+namespace ServerApi.Dtos.ReceznieDtos
 {
     public enum StatusRecenzie
     {

@@ -28,6 +28,18 @@ namespace ServerApi.Repositories
                                 .FirstOrDefaultAsync(user => user.Id == id);
         }
 
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users
+                                .Include(user => user.Recenzii)
+                                .FirstOrDefaultAsync(user => user.Email == email);
+        }
+
+        public async Task<bool> SearchUserByEmailAsync(string email)
+        {
+            return await _context.Users.AnyAsync(user => user.Email == email);
+        }
+
         public async Task<User> AddUserAsync(User user)
         {
             _context.Users.Add(user);
@@ -50,7 +62,6 @@ namespace ServerApi.Repositories
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
-
 
        
     }

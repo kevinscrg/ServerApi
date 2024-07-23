@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using ServerApi.Dtos;
-using ServerApi.Dtos.CreateDtos;
-using ServerApi.Dtos.UpdateDtos;
+using ServerApi.Dtos.UserDtos;
 
 namespace ServerApi.Profiles
 {

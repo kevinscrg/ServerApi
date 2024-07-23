@@ -8,6 +8,11 @@ namespace ServerApi.Models
 
 
         [Required]
+        public bool verificat { get; set; } = false;
+
+
+        [Required]
+        [EmailAddress]
         public string Email { get; set; } = string.Empty;
 
 

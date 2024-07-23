@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ServerApi.Dtos;
-using ServerApi.Dtos.CreateDtos;
-using ServerApi.Dtos.UpdateDtos;
+using ServerApi.Dtos.UserDtos;
+using ServerApi.Servicies.Exceptii;
 using ServerApi.Servicies.Interfaces;
 
 namespace ServerApi.Controllers
@@ -38,9 +37,46 @@ namespace ServerApi.Controllers
         [HttpPost]
         public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto user)
         {
+            try { 
+            if(user.Parola != user.ConfirmareParola)
+            {
+                return BadRequest("Parolele nu coincid");
+            }
+
             var userAdded = await _userService.AddUserAsync(user);
             return CreatedAtAction(nameof(GetUser), new { id = userAdded.Id }, userAdded);
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
+
+        [HttpPost("login")]
+        public async Task<ActionResult> LogIn(LogInUserDto loginDto)
+        {
+            try
+            {
+                var result = await _userService.LogIn(loginDto);
+                if (result)
+                {
+                    return Ok();
+                }
+                return Unauthorized();
+
+            }
+            catch (UserNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UpdateUserDto user)
@@ -50,14 +86,24 @@ namespace ServerApi.Controllers
                 {
                     return BadRequest();
                 }
+                if (user.Parola != user.ConfirmareParola)
+                {
+                    return BadRequest("Parolele nu coincid");
+                }
+
 
                 await _userService.UpdateUserAsync(user);
 
                 return NoContent();
-            }catch(System.Exception e)
-                {
-                    return NotFound(e.Message);
-                }
+            }
+            catch (UserNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete("{id}")]

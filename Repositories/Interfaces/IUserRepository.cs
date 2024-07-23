@@ -9,5 +9,8 @@ namespace ServerApi.Repositories.Interfaces
         Task<User> AddUserAsync(User user);
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(int id);
+
+        Task<User> GetUserByEmailAsync(string email);
+        Task<bool> SearchUserByEmailAsync(string email);
     }
 }

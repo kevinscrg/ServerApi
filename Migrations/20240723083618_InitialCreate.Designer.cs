@@ -11,7 +11,7 @@ using ServerApi.Data;
 namespace ServerApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240722152318_InitialCreate")]
+    [Migration("20240723083618_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -96,6 +96,7 @@ namespace ServerApi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nume")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -141,6 +142,7 @@ namespace ServerApi.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nume")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -164,6 +166,9 @@ namespace ServerApi.Migrations
                     b.Property<string>("Parola")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("verificat")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

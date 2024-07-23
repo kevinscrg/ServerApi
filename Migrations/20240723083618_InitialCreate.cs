@@ -29,6 +29,7 @@ namespace ServerApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Carti", x => x.Id);
+                    table.UniqueConstraint("AK_Carti_Isbn", x => x.Isbn);
                 });
 
             migrationBuilder.CreateTable(
@@ -37,7 +38,7 @@ namespace ServerApi.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nume = table.Column<string>(type: "TEXT", nullable: true)
+                    Nume = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,7 +51,7 @@ namespace ServerApi.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nume = table.Column<string>(type: "TEXT", nullable: true)
+                    Nume = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,6 +64,7 @@ namespace ServerApi.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    verificat = table.Column<bool>(type: "INTEGER", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Parola = table.Column<string>(type: "TEXT", nullable: false),
                     Nume = table.Column<string>(type: "TEXT", nullable: true)
@@ -70,6 +72,7 @@ namespace ServerApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.UniqueConstraint("AK_Users_Email", x => x.Email);
                 });
 
             migrationBuilder.CreateTable(

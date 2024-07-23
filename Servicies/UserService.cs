@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using ServerApi.Dtos;
-using ServerApi.Dtos.CreateDtos;
-using ServerApi.Dtos.UpdateDtos;
+using ServerApi.Dtos.UserDtos;
 using ServerApi.Models;
 using ServerApi.Repositories.Interfaces;
+using ServerApi.Servicies.Exceptii;
 using ServerApi.Servicies.Interfaces;
 using System.Security.Cryptography;
 using System.Text;
@@ -35,7 +34,9 @@ namespace ServerApi.Servicies
 
         public async Task<UserDto> AddUserAsync(CreateUserDto user)
         {
-            var encryptedPass = this.EncryptPass(user.Parola);
+            if(await _userRepository.SearchUserByEmailAsync(user.Email)) throw new UserExistsException("User already exists");
+
+            var encryptedPass = this.EncryptPassAsync(user.Parola);
             user.Parola = await encryptedPass;
             var userToAdd = _mapper.Map<User>(user);
             var userAdded = await _userRepository.AddUserAsync(userToAdd);
@@ -44,13 +45,11 @@ namespace ServerApi.Servicies
 
         public async Task UpdateUserAsync(UpdateUserDto user)
         {
-            var userToUpdate = await _userRepository.GetUserByIdAsync(user.Id);
+          if(! await _userRepository.SearchUserByEmailAsync(user.Email)) throw new UserNotFoundException("User not found");  
+            var EncryptedPass = await EncryptPassAsync(user.Parola);
+            user.Parola = EncryptedPass;
+            var userToUpdate = _mapper.Map<User>(user);
 
-            if (userToUpdate == null) throw new Exception("User not found");
-            
-
-            userToUpdate.Nume = user.Nume;
-            userToUpdate.Parola = user.Parola;
 
             await _userRepository.UpdateUserAsync(userToUpdate);
 
@@ -63,7 +62,7 @@ namespace ServerApi.Servicies
 
         
 
-        private Task<string> EncryptPass(string pass)
+        private Task<string> EncryptPassAsync(string pass)
         {
             using var sha256 = SHA256.Create();
             byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(pass));
@@ -75,5 +74,18 @@ namespace ServerApi.Servicies
             }
             return Task.FromResult(sb.ToString());
         }
+
+        public async Task<bool> LogIn(LogInUserDto loginDto)
+        {
+        
+            if (!await _userRepository.SearchUserByEmailAsync(loginDto.Email)) throw new UserNotFoundException("User not found");
+               
+            var user = await _userRepository.GetUserByEmailAsync(loginDto.Email);
+            var encryptedPass = EncryptPassAsync(loginDto.Parola);
+           
+            if (user.Parola == encryptedPass.Result) return true;
+            else return false;
+        }
+
     }
 }

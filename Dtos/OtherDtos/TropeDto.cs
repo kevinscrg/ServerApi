@@ -1,4 +1,4 @@
-﻿namespace ServerApi.Dtos
+﻿namespace ServerApi.Dtos.OtherDtos
 {
     public class TropeDto
     {

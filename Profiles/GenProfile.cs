@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ServerApi.Dtos.OtherDtos;
 
 namespace ServerApi.Profiles
 {
@@ -6,7 +7,7 @@ namespace ServerApi.Profiles
     {
         public GenProfile()
         {
-            CreateMap<Models.Gen, Dtos.GenDto>().ReverseMap();
+            CreateMap<Models.Gen, GenDto>().ReverseMap();
         }
     }
 }
