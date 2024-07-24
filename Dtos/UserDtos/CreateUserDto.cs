@@ -6,6 +6,7 @@ namespace ServerApi.Dtos.UserDtos
     {
 
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]

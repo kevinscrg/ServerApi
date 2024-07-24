@@ -77,10 +77,10 @@ namespace ServerApi.Servicies
 
         public async Task<bool> LogIn(LogInUserDto loginDto)
         {
-        
-            if (!await _userRepository.SearchUserByEmailAsync(loginDto.Email)) throw new UserNotFoundException("User not found");
-               
+
             var user = await _userRepository.GetUserByEmailAsync(loginDto.Email);
+            if (user == null) throw new UserNotFoundException("User not found");
+              
             var encryptedPass = EncryptPassAsync(loginDto.Parola);
            
             if (user.Parola == encryptedPass.Result) return true;
