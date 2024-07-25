@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
-using ServerApi.Authentificator;
 using ServerApi.Dtos.UserDtos;
 using ServerApi.Models;
 using ServerApi.Repositories.Interfaces;
@@ -90,29 +89,27 @@ namespace ServerApi.Servicies
             var encryptedPass = await EncryptPassAsync(loginDto.Parola);
             if(user.Parola != encryptedPass) throw new Exception("Incorrect password");
 
-            var jwt = _configuration.GetSection("Jwt").Get<Jwt>();
-
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, jwt.Subject),
+                new Claim(JwtRegisteredClaimNames.Sub,  _configuration["Jwt:Subject"]),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToString()),
+                //new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToString()), -- aici genereaza un token gresit
                 new Claim("Id", user.Id.ToString()),
-                new Claim("Email", user.Email)
+                new Claim("Email", user.Email.ToString())
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key));
-            var singIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: jwt.Issuer,
-                audience: jwt.Audience,
-                claims: claims,
-                //expires: DateTime.Now.AddMinutes(60),
-                signingCredentials: singIn
+                _configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"],
+                claims,
+                expires: DateTime.Now.AddMinutes(60),
+                signingCredentials: signIn
             );
-            
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            string tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            return tokenString;
         }
 
     }
