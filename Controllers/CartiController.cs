@@ -19,26 +19,39 @@ namespace ServerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CarteDto>>> GetCarti()
         {
-            var carti = await _carteService.GetAllCartiAsync();
-            return Ok(carti);
+           try{ 
+                var carti = await _carteService.GetAllCartiAsync();
+                return Ok(carti);
+            }catch (Exception ex) {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<CarteDto>> GetCarte(int id)
         {
+            try{
             var carte = await _carteService.GetCarteByIdAsync(id);
             if (carte == null)
             {
                 return NotFound();
             }
-            return Ok(carte);
+                return Ok(carte);
+            }catch (Exception ex) {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
         public async Task<ActionResult<CarteDto>> CreateCarte(CreateCarteDto carte)
         {
-            var carteAdded = await _carteService.AddCarteAsync(carte);
-            return CreatedAtAction(nameof(GetCarte), new { id = carteAdded.Id }, carteAdded);
+            try{           
+                var carteAdded = await _carteService.AddCarteAsync(carte);
+                return CreatedAtAction(nameof(GetCarte), new { id = carteAdded.Id }, carteAdded);
+            }catch(System.Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut("{id}")]
@@ -63,8 +76,13 @@ namespace ServerApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCarte(int id)
         {
-            await _carteService.DeleteCarteAsync(id);
-            return NoContent();
+            try{
+                await _carteService.DeleteCarteAsync(id);
+                return NoContent();
+            }catch(System.Exception e)
+            {
+                return NotFound(e.Message);
+            }
         }
 
     }
