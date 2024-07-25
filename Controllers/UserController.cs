@@ -20,20 +20,34 @@ namespace ServerApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
+            try { 
             var users = await _userService.GetAllUsersAsync();
             return Ok(users);
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("{id}")]
         [Authorize]
         public async Task<ActionResult<UserDto>> GetUser(int id)
         {
+            try { 
             var user = await _userService.GetUserByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
             return Ok(user);
+            }catch(UserNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost]
@@ -107,8 +121,17 @@ namespace ServerApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
+            try { 
             await _userService.DeleteUserAsync(id);
             return NoContent();
+            }catch(UserNotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
 
