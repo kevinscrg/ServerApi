@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServerApi.Dtos.UserDtos;
 using ServerApi.Servicies.Exceptii;
 using ServerApi.Servicies.Interfaces;
@@ -24,6 +25,7 @@ namespace ServerApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<UserDto>> GetUser(int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
@@ -59,11 +61,7 @@ namespace ServerApi.Controllers
             try
             {
                 var result = await _userService.LogIn(loginDto);
-                if (result)
-                {
-                    return Ok();
-                }
-                return Unauthorized();
+                return Ok(result);
 
             }
             catch (UserNotFoundException e)

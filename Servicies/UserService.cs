@@ -1,9 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.IdentityModel.Tokens;
+using ServerApi.Authentificator;
 using ServerApi.Dtos.UserDtos;
 using ServerApi.Models;
 using ServerApi.Repositories.Interfaces;
 using ServerApi.Servicies.Exceptii;
 using ServerApi.Servicies.Interfaces;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -13,11 +17,13 @@ namespace ServerApi.Servicies
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository, IMapper mapper, IConfiguration configuration)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
@@ -75,16 +81,38 @@ namespace ServerApi.Servicies
             return Task.FromResult(sb.ToString());
         }
 
-        public async Task<bool> LogIn(LogInUserDto loginDto)
+        public async Task<string> LogIn(LogInUserDto loginDto)
         {
-
+          
             var user = await _userRepository.GetUserByEmailAsync(loginDto.Email);
+
             if (user == null) throw new UserNotFoundException("User not found");
-              
-            var encryptedPass = EncryptPassAsync(loginDto.Parola);
-           
-            if (user.Parola == encryptedPass.Result) return true;
-            else return false;
+            var encryptedPass = await EncryptPassAsync(loginDto.Parola);
+            if(user.Parola != encryptedPass) throw new Exception("Incorrect password");
+
+            var jwt = _configuration.GetSection("Jwt").Get<Jwt>();
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, jwt.Subject),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToString()),
+                new Claim("Id", user.Id.ToString()),
+                new Claim("Email", user.Email)
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key));
+            var singIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: jwt.Issuer,
+                audience: jwt.Audience,
+                claims: claims,
+                //expires: DateTime.Now.AddMinutes(60),
+                signingCredentials: singIn
+            );
+            
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
     }

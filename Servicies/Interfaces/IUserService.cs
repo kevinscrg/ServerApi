@@ -1,4 +1,5 @@
 ﻿using ServerApi.Dtos.UserDtos;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace ServerApi.Servicies.Interfaces
 {
@@ -10,7 +11,7 @@ namespace ServerApi.Servicies.Interfaces
         Task UpdateUserAsync(UpdateUserDto user);
         Task DeleteUserAsync(int id);
 
-        Task<bool> LogIn(LogInUserDto loginDto);
+        Task<string> LogIn(LogInUserDto loginDto);
 
     }
 }
